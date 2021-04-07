@@ -6,7 +6,7 @@
 namespace button_asukiaaa {
   class ButtonState {
   public:
-    ButtonState(bool pressedPinState = LOW, unsigned long bufferMs = 20UL);
+    ButtonState(bool pressedPinState = HIGH, unsigned long bufferMs = 20UL);
 
     void update(bool newState);
     bool changedToPress();
