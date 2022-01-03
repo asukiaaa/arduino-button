@@ -8,14 +8,13 @@ See [an example project](./examples/gpioButton/gpioButton.ino).
 
 Include
 ```c
-#include <utils_asukiaaa.h>
-#include <utils_asukiaaa/button.h>
+#include <button_asukiaaa.h>
 ```
 
 Define with gpio pin
 ```c
 #define PIN_BTN 10
-utils_asukiaaa::button::Button btn(PIN_BTN);
+button_asukiaaa::Button btn(PIN_BTN);
 ```
 
 Call update in loop to check pin state
