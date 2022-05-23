@@ -9,10 +9,10 @@ namespace button_asukiaaa {
     ButtonState(bool pressedPinState = HIGH, unsigned long bufferMs = 20UL);
 
     void update(bool newState);
-    bool changedToPress();
-    bool changedToRelease();
-    bool isPresseing();
-    bool isReleasing();
+    bool changedToPress() const;
+    bool changedToRelease() const;
+    bool isPresseing() const;
+    bool isReleasing() const;
 
   private:
     unsigned long bufferMs;

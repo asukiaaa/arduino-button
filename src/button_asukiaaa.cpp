@@ -31,16 +31,16 @@ namespace button_asukiaaa {
     }
   }
 
-  bool ButtonState::changedToPress() {
+  bool ButtonState::changedToPress() const {
     return currentPinState == pressedPinState && onOverBufferTime;
   }
-  bool ButtonState::changedToRelease() {
+  bool ButtonState::changedToRelease() const {
     return currentPinState != pressedPinState && onOverBufferTime;
   }
-  bool ButtonState::isPresseing() {
+  bool ButtonState::isPresseing() const {
     return holedPinState == pressedPinState;
   }
-  bool ButtonState::isReleasing() {
+  bool ButtonState::isReleasing() const {
     return holedPinState != pressedPinState;
   }
 
