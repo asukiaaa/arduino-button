@@ -5,8 +5,8 @@
 #define MS_TO_DETECT_LESS_THAN 1000UL
 
 button_asukiaaa::Button btn(PIN_BUTTON);
-button_asukiaaa::MultiTimesPressDetector multiTimesPress(TIMES_TO_DETECT,
-                                                        MS_TO_DETECT_LESS_THAN);
+button_asukiaaa::MultiTimesPressDetector multiTimesPress(
+    TIMES_TO_DETECT, MS_TO_DETECT_LESS_THAN);
 
 void setup() {
   Serial.begin(115200);
