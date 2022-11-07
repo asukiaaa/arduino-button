@@ -10,7 +10,9 @@ class ButtonState {
 
   void update(bool newState);
   bool changedToPress() const;
+  bool changedToPressForMs(unsigned long ms) const;
   bool changedToRelease() const;
+  bool changedToReleaseForMs(unsigned long ms) const;
   bool isPresseing() const;
   bool isReleasing() const;
   bool rawCurrentPressed() const;
@@ -18,6 +20,8 @@ class ButtonState {
  private:
   unsigned long bufferMs;
   unsigned long changedAt;
+  unsigned long updatedAtCurrent = 0;
+  unsigned long updatedAtPrev = 0;
   char timingState;
   bool onOverBufferTime;
   bool changedOverBufferTime;
@@ -26,6 +30,8 @@ class ButtonState {
   bool prevPinState;
   bool holedPinState;
   bool pressedPinState;
+
+  bool changedForMs(unsigned long ms) const;
 };
 
 class Button : public ButtonState {

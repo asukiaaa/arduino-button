@@ -9,6 +9,8 @@ ButtonState::ButtonState(bool pressedPinState, unsigned long bufferMs)
 }
 
 void ButtonState::update(bool newState) {
+  updatedAtPrev = updatedAtCurrent;
+  updatedAtCurrent = millis();
   prevPinState = currentPinState;
   currentPinState = newState;
   if (currentPinState != prevPinState) {
@@ -16,7 +18,7 @@ void ButtonState::update(bool newState) {
       // detect changing state as noize
       changedOverBufferTime = true;
     } else {
-      changedAt = millis();
+      changedAt = updatedAtCurrent;
       changedOverBufferTime = false;
       onOverBufferTime = false;
     }
@@ -25,18 +27,29 @@ void ButtonState::update(bool newState) {
     onOverBufferTime =
         false;  // become false after first time of over buffer time
   }
-  if (!changedOverBufferTime && millis() - changedAt > bufferMs) {
+  if (!changedOverBufferTime && updatedAtCurrent - changedAt > bufferMs) {
     changedOverBufferTime = true;
     onOverBufferTime = true;
     holedPinState = currentPinState;
   }
 }
 
+bool ButtonState::changedForMs(unsigned long ms) const {
+  auto diffCurrent = updatedAtCurrent - changedAt;
+  auto diffPrev = updatedAtPrev - changedAt;
+  return diffPrev < ms && ms <= diffCurrent;
+}
 bool ButtonState::changedToPress() const {
   return currentPinState == pressedPinState && onOverBufferTime;
 }
+bool ButtonState::changedToPressForMs(unsigned long ms) const {
+  return isPresseing() && changedForMs(ms);
+}
 bool ButtonState::changedToRelease() const {
   return currentPinState != pressedPinState && onOverBufferTime;
+}
+bool ButtonState::changedToReleaseForMs(unsigned long ms) const {
+  return isReleasing() && changedForMs(ms);
 }
 bool ButtonState::isPresseing() const {
   return holedPinState == pressedPinState;
