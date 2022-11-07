@@ -4,6 +4,7 @@
 #include <Arduino.h>
 
 namespace button_asukiaaa {
+
 class ButtonState {
  public:
   ButtonState(bool pressedPinState = HIGH, unsigned long bufferMs = 20UL);
@@ -45,6 +46,30 @@ class Button : public ButtonState {
   int pin;
   int pinModeOption;
 };
+
+class MultiTimesPressDetector {
+ public:
+  MultiTimesPressDetector(int timesPress, unsigned long msLessThan);
+  ~MultiTimesPressDetector();
+  void updateByBtnState(const ButtonState& btn);
+  void updateByChangedToPress(bool changedToPress);
+  bool detect();
+  void reset();
+  bool detectAndResetIfTrue();
+  int getTimesPress();
+  unsigned long getMsLessThan();
+
+ private:
+  unsigned long* dataArr;
+  int usedLength;
+  int nextIndex;
+  const int timesPress;
+  unsigned long msLessThan;
+
+  void incrementNextIndex();
+  unsigned long getDataBefore(int length);
+};
+
 }  // namespace button_asukiaaa
 
 #endif
